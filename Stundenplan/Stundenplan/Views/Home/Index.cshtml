@@ -1,0 +1,45 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@using Stundenplan.ViewModels
+@model KlasseTestwerteViewModel
+
+<style>
+    table {
+        width: 100%;
+        text-align: center;
+    }
+
+    tr, td {
+        border: 1px solid black;
+        height: 50px;
+    }
+
+    .bold {
+        font-weight: bold;
+    }
+</style>
+
+<table>
+    <tr>
+        <td></td>
+        <td class="bold">Montag</td>
+        <td class="bold">Dienstag</td>
+        <td class="bold">Mittwoch</td>
+        <td class="bold">Donnerstag</td>
+        <td class="bold">Freitag</td>
+    </tr>
+    @for (int i = 1; i <= 6; i++)
+    {
+        <tr>
+            <td>@i</td>
+            <td>@Model.Stunden.FirstOrDefault(s => s.Stunde == i && s.Wochentag == "Montag").Fach</td>
+            <td>@Model.Stunden.FirstOrDefault(s => s.Stunde == i && s.Wochentag == "Dienstag").Fach</td>
+            <td>@Model.Stunden.FirstOrDefault(s => s.Stunde == i && s.Wochentag == "Mittwoch").Fach</td>
+            <td>@Model.Stunden.FirstOrDefault(s => s.Stunde == i && s.Wochentag == "Donnerstag").Fach</td>
+            <td>@Model.Stunden.FirstOrDefault(s => s.Stunde == i && s.Wochentag == "Freitag").Fach</td>
+        </tr>
+
+    }
+</table>
