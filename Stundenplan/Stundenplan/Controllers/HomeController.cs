@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Stundenplan.Models;
 using Stundenplan.ViewModels;
 using Stundenplan.Tests;
+using Microsoft.EntityFrameworkCore;
 
 namespace Stundenplan.Controllers
 {
@@ -22,7 +23,9 @@ namespace Stundenplan.Controllers
         {
             KlasseTestwerteViewModel vm = new KlasseTestwerteViewModel();
             //vm.Stunden = Testing.CreateTestValues();
-            vm.Stunden = _context.Klasse.FirstOrDefault(k => k.Id == 1).Stundens;
+            var result = _context.Klasse.Include(klasse => klasse.Stundens).FirstOrDefault(k => k.Id == 1).Stundens;
+            vm.Stunden = result.ToList();
+            //vm.Stunden = _context.Klasse.Include(klasse => klasse.Stundens).FirstOrDefault(k => k.Id == 1);
             return View(vm);
         }
 

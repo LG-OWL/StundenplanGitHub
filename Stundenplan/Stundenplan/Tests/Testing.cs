@@ -8,6 +8,7 @@ namespace Stundenplan.Tests
 {
     public class Testing
     {
+        /*
         public static List<StundenTestwerteViewModel> CreateTestValues()
         {
             List<StundenTestwerteViewModel> stundenlist = new List<StundenTestwerteViewModel>();
@@ -61,5 +62,6 @@ namespace Stundenplan.Tests
             }
             return stundenlist;
         }
+        */
     }
 }

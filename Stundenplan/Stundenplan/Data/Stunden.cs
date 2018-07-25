@@ -17,5 +17,7 @@ namespace Stundenplan.Data
         public int KlasseId { get; set; }
         //Navigation Property
         public Klasse Schulklasse { get; set; }
+
+        public override string ToString() { return Wochentag + "/" + Stunde + " - " + Fach; }
     }
 }

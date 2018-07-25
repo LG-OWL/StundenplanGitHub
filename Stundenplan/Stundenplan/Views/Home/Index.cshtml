@@ -34,11 +34,11 @@
     {
         <tr>
             <td>@i</td>
-            <td>@Model.Stunden.FirstOrDefault(s => s.Stunde == i && s.Wochentag == "Montag").Fach</td>
-            <td>@Model.Stunden.FirstOrDefault(s => s.Stunde == i && s.Wochentag == "Dienstag").Fach</td>
-            <td>@Model.Stunden.FirstOrDefault(s => s.Stunde == i && s.Wochentag == "Mittwoch").Fach</td>
-            <td>@Model.Stunden.FirstOrDefault(s => s.Stunde == i && s.Wochentag == "Donnerstag").Fach</td>
-            <td>@Model.Stunden.FirstOrDefault(s => s.Stunde == i && s.Wochentag == "Freitag").Fach</td>
+            <td>@Model.Stunden.Where(s => s.Stunde == i).Where(s => s.Wochentag == "Montag").FirstOrDefault().Fach</td>
+            <td>@Model.Stunden.Where(s => s.Stunde == i && s.Wochentag == "Dienstag").FirstOrDefault().Fach</td>
+            <td>@Model.Stunden.Where(s => s.Stunde == i && s.Wochentag == "Mittwoch").FirstOrDefault().Fach</td>
+            <td>@Model.Stunden.Where(s => s.Stunde == i && s.Wochentag == "Donnerstag").FirstOrDefault().Fach</td>
+            <td>@Model.Stunden.Where(s => s.Stunde == i && s.Wochentag == "Freitag").FirstOrDefault().Fach</td>
         </tr>
 
     }
