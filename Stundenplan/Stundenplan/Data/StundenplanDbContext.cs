@@ -19,5 +19,7 @@ namespace Stundenplan.Models
         public DbSet<Stundenplan.Data.Schueler> Schueler { get; set; }
 
         public DbSet<Stundenplan.Data.Stunden> Stunden { get; set; }
+
+        public DbSet<Stundenplan.Data.Lehrer> Lehrer { get; set; }
     }
 }
