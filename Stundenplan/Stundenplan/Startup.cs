@@ -25,7 +25,7 @@ namespace Stundenplan
         {
             ServiceProvider serviceProvider = services.BuildServiceProvider();
             var dbContext = serviceProvider.GetRequiredService<StundenplanDbContext>();
-            //dbContext.Database.EnsureDeleted();
+            dbContext.Database.EnsureDeleted();
             dbContext.Database.EnsureCreated();
             if (!dbContext.Schueler.Any())
             {
@@ -75,7 +75,8 @@ namespace Stundenplan
                                 lessonStr = "Frei";
                                 break;
                         }
-                        Stunden stunden = new Stunden() { Stunde = i, Wochentag = wochentag, Fach = lessonStr};
+                        Lehrer lehrer = new Lehrer() { Name = "Wittmann" };
+                        Stunden stunden = new Stunden() { Stunde = i, Wochentag = wochentag, Fach = lessonStr, Lehrer = lehrer};
                         stundenlist.Add(stunden);
                     }
                 }
