@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Stundenplan.Models;
 using Stundenplan.Data;
+using Stundenplan.Services;
 
 namespace Stundenplan
 {
@@ -69,6 +70,7 @@ namespace Stundenplan
 
             services.AddDbContext<StundenplanDbContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("StundenplanDbContext")));
+            services.AddTransient<IStundenService, StundenService>();
             Seed(services);
         }
 

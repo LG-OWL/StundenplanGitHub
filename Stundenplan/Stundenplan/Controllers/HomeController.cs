@@ -1,29 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Stundenplan.Models;
 using Stundenplan.ViewModels;
-using Stundenplan.Tests;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Stundenplan.Services;
 
 namespace Stundenplan.Controllers
 {
     public class HomeController : Controller
     {
-        private StundenplanDbContext _context;
+        private IStundenService _service;
 
-        public HomeController(StundenplanDbContext context)
+        public HomeController(IStundenService service)
         {
-            _context = context;
+            _service = service;
         }
+
         public IActionResult Index()
         {
             KlasseTestwerteViewModel vm = new KlasseTestwerteViewModel();
-            var klassenliste = _context.Klasse.ToList();
+            var klassenliste = _service.GetKlassen();
             SelectList list = new SelectList(klassenliste, "Id", "Bezeichnung");
             ViewBag.klasselist = list;
 
@@ -35,14 +31,9 @@ namespace Stundenplan.Controllers
             KlasseTestwerteViewModel vm = new KlasseTestwerteViewModel();
             if (klassen != null)
             {
-                var result = _context.Klasse
-                .Include(klasse => klasse.Stundens)
-                .ThenInclude(s => s.Lehrer)
-                .FirstOrDefault(k => k.Id == klassen)
-                .Stundens;
-                vm.Stunden = result.ToList();
+                vm.Stunden = _service.GetStundenByKlasseId(klassen.Value);
             }
-            var klassenliste = _context.Klasse.ToList();
+            var klassenliste = _service.GetKlassen();
             SelectList list = new SelectList(klassenliste, "Id", "Bezeichnung");
             ViewBag.klasselist = list;
 
