@@ -1,2 +1,2 @@
-# StundenplanGitHub
+# Stundenplan
 Stundenplan mit Vertretung GitHub

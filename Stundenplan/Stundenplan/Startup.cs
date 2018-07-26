@@ -75,7 +75,7 @@ namespace Stundenplan
                                 lessonStr = "Frei";
                                 break;
                         }
-                        Lehrer lehrer = new Lehrer() { Name = "Test" };
+                        Lehrer lehrer = new Lehrer() { Name = "Wittmann" };
                         Stunden stunden = new Stunden() { Stunde = i, Wochentag = wochentag, Fach = lessonStr, Lehrer = lehrer};
                         stundenlist.Add(stunden);
                     }

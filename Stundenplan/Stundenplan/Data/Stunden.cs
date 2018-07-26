@@ -18,6 +18,9 @@ namespace Stundenplan.Data
         
         public Lehrer Lehrer { get; set; }
 
+        public int LehrerId { get; set; }
+        public Lehrer Lehrer { get; set; }
+
         //Foreign Key
         public int KlasseId { get; set; }
         //Navigation Property
