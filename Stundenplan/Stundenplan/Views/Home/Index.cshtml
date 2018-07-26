@@ -21,25 +21,42 @@
     }
 </style>
 
-<table>
-    <tr>
-        <td></td>
-        <td class="bold">Montag</td>
-        <td class="bold">Dienstag</td>
-        <td class="bold">Mittwoch</td>
-        <td class="bold">Donnerstag</td>
-        <td class="bold">Freitag</td>
-    </tr>
-    @for (int i = 1; i <= 6; i++)
-    {
+@if (Model.Stunden == null)
+{
+    <form action="/Home/Index" method="get">
+        @Html.DropDownList("Klassen", ViewBag.klasselist as SelectList, "Wähle deine Klasse aus")
+        <input type="submit" value="Submit" />
+    </form>
+}
+else
+{
+    <form action="/Home/Index" method="get">
+        @Html.DropDownList("Klassen", ViewBag.klasselist as SelectList, "Wähle deine Klasse aus")
+        <input type="submit" value="Submit" />
+    </form>
+    <table>
         <tr>
-            <td>@i</td>
-            <td>@Model.Stunden.FirstOrDefault(s => s.Stunde == i && s.Wochentag == "Montag").Fach <br />@Model.Stunden.FirstOrDefault(s => s.Stunde == i && s.Wochentag == "Montag").Lehrer.Name</td>
-            <td>@Model.Stunden.FirstOrDefault(s => s.Stunde == i && s.Wochentag == "Dienstag").Fach <br />@Model.Stunden.FirstOrDefault(s => s.Stunde == i && s.Wochentag == "Montag").Lehrer.Name</td>
-            <td>@Model.Stunden.FirstOrDefault(s => s.Stunde == i && s.Wochentag == "Mittwoch").Fach <br />@Model.Stunden.FirstOrDefault(s => s.Stunde == i && s.Wochentag == "Montag").Lehrer.Name</td>
-            <td>@Model.Stunden.FirstOrDefault(s => s.Stunde == i && s.Wochentag == "Donnerstag").Fach <br />@Model.Stunden.FirstOrDefault(s => s.Stunde == i && s.Wochentag == "Montag").Lehrer.Name</td>
-            <td>@Model.Stunden.FirstOrDefault(s => s.Stunde == i && s.Wochentag == "Freitag").Fach <br />@Model.Stunden.FirstOrDefault(s => s.Stunde == i && s.Wochentag == "Montag").Lehrer.Name</td>
+            <td></td>
+            <td class="bold">Montag</td>
+            <td class="bold">Dienstag</td>
+            <td class="bold">Mittwoch</td>
+            <td class="bold">Donnerstag</td>
+            <td class="bold">Freitag</td>
         </tr>
+        @for (int i = 1; i <= 6; i++)
+        {
+            <tr>
+                <td>@i</td>
+                @for (int j = 0; j < 5; j++)
+                {
+                <td>
+                    @Model.Stunden.FirstOrDefault(s => s.Stunde == i && s.Wochentag == j).Fach <br />@Model.Stunden.FirstOrDefault(s => s.Stunde == i && s.Wochentag == j).Lehrer?.Name
+                    <br />@Model.Stunden.FirstOrDefault(s => s.Stunde == i && s.Wochentag == j).Raum?.Bezeichnung
+                </td>
 
-    }
-</table>
+                }
+            </tr>
+
+        }
+    </table>
+}

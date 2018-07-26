@@ -29,34 +29,11 @@ namespace Stundenplan
             dbContext.Database.EnsureCreated();
             if (!dbContext.Schueler.Any())
             {
-                List<Schueler> schuelerlist = new List<Schueler>();
                 List<Stunden> stundenlist = new List<Stunden>();
-                for (int zaehler = 0; zaehler < 5; zaehler++)
+                for (int j = 0; j < 5; j++)
                 {
                     Random rnd = new Random();
-                    string wochentag;
-                    switch (zaehler)
-                    {
-                        case 0:
-                            wochentag = "Montag";
-                            break;
-                        case 1:
-                            wochentag = "Dienstag";
-                            break;
-                        case 2:
-                            wochentag = "Mittwoch";
-                            break;
-                        case 3:
-                            wochentag = "Donnerstag";
-                            break;
-                        case 4:
-                            wochentag = "Freitag";
-                            break;
-                        default:
-                            wochentag = "";
-                            break;
-                    }
-                    for (int i = 1; i <= 6; i++)
+                    for (int k = 1; k <= 6; k++)
                     {
                         int lessonDecision = rnd.Next(1, 4);
                         string lessonStr;
@@ -75,14 +52,11 @@ namespace Stundenplan
                                 lessonStr = "Frei";
                                 break;
                         }
-                        Lehrer lehrer = new Lehrer() { Name = "Wittmann" };
-                        Stunden stunden = new Stunden() { Stunde = i, Wochentag = wochentag, Fach = lessonStr, Lehrer = lehrer};
+                        Stunden stunden = new Stunden() { Stunde = k, Wochentag = j, Fach = lessonStr};
                         stundenlist.Add(stunden);
                     }
                 }
-                Schueler schueler = new Schueler() { Name = "Werner" };
-                schuelerlist.Add(schueler);
-                dbContext.Klasse.Add(new Klasse() { Bezeichnung = "6a", Schuelers = schuelerlist, Stundens = stundenlist });
+                dbContext.Klasse.Add(new Klasse() { Bezeichnung = "6a", Stundens = stundenlist });
                 dbContext.SaveChanges();
             }
 

@@ -8,6 +8,7 @@ using Stundenplan.Models;
 using Stundenplan.ViewModels;
 using Stundenplan.Tests;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Stundenplan.Controllers
 {
@@ -22,14 +23,29 @@ namespace Stundenplan.Controllers
         public IActionResult Index()
         {
             KlasseTestwerteViewModel vm = new KlasseTestwerteViewModel();
-            //vm.Stunden = Testing.CreateTestValues();
-            var result = _context.Klasse
+            var klassenliste = _context.Klasse.ToList();
+            SelectList list = new SelectList(klassenliste, "Id", "Bezeichnung");
+            ViewBag.klasselist = list;
+
+            return View(vm);
+        }
+        [HttpGet]
+        public IActionResult Index(int? klassen)
+        {
+            KlasseTestwerteViewModel vm = new KlasseTestwerteViewModel();
+            if (klassen != null)
+            {
+                var result = _context.Klasse
                 .Include(klasse => klasse.Stundens)
                 .ThenInclude(s => s.Lehrer)
-                .FirstOrDefault(k => k.Id == 1)
+                .FirstOrDefault(k => k.Id == klassen)
                 .Stundens;
-            vm.Stunden = result.ToList();
-            //vm.Stunden = _context.Klasse.Include(klasse => klasse.Stundens).FirstOrDefault(k => k.Id == 1);
+                vm.Stunden = result.ToList();
+            }
+            var klassenliste = _context.Klasse.ToList();
+            SelectList list = new SelectList(klassenliste, "Id", "Bezeichnung");
+            ViewBag.klasselist = list;
+
             return View(vm);
         }
 
