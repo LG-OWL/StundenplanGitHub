@@ -1,7 +1,20 @@
 ﻿@{
-    ViewData["Title"] = "About";
+    ViewData["Title"] = "Einstellungen";
 }
 <h2>@ViewData["Title"]</h2>
 <h3>@ViewData["Message"]</h3>
 
-<p>Use this area to provide additional information.</p>
+@if(Model.stundens != null)
+{
+
+
+}
+else
+{
+
+
+}
+<form action="/Home/CheckToContinue" method="post">
+    @Html.DropDownList("Klassen", ViewBag.klasselist as SelectList, "Wähle deine Klasse aus")
+    <input type="submit" value="Submit" />
+</form>

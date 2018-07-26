@@ -1,16 +1,14 @@
-﻿using Stundenplan.Data;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Stundenplan.ViewModels
+namespace Stundenplan.Data
 {
-    public class KlasseTestwerteViewModel
+    public class Raum
     {
         public int Id { get; set; }
-
         public string Bezeichnung { get; set; }
-        public IList<Stunden> Stunden { get; set; }
+
     }
 }

@@ -10,17 +10,19 @@ namespace Stundenplan.Data
     {
         public int Id { get; set; }
 
-        public string Wochentag { get; set; }
+        public int Wochentag { get; set; }
         public int Stunde { get; set; }
         public string Fach { get; set; }
         [ForeignKey("LehrerId")]
-        public int LehrerId { get; set; }
-        
+        public int? Lehrerid { get; set; }
         public Lehrer Lehrer { get; set; }
 
-        public int LehrerId { get; set; }
-        public Lehrer Lehrer { get; set; }
+        public int? VertretungslehrerId { get; set; }
+        public Lehrer Vertretungslehrer { get; set; }
 
+        public int? RaumId { get; set; }
+
+        public Raum Raum { get; set; }
         //Foreign Key
         public int KlasseId { get; set; }
         //Navigation Property
