@@ -31,10 +31,26 @@ namespace Stundenplan
             {
                 for (int stundenCounter = 1; stundenCounter <= 6; stundenCounter++)
                 {
-                    AddStunde(dbContext, klasse6a.Id, wochentagCounter, stundenCounter);
-                    AddStunde(dbContext, klasse6b.Id, wochentagCounter, stundenCounter);
+                    var lehrer1 = AddLehrer(dbContext,null, "Müller"); 
+                    AddStunde(dbContext, klasse6a.Id, wochentagCounter, stundenCounter, lehrer1.Id,null);
+                    AddStunde(dbContext, klasse6b.Id, wochentagCounter, stundenCounter,null,null);
                 }
             }
+            var vertretungsraum = AddRaum(dbContext, "B1.25");
+            var vertretungslehrer = AddLehrer(dbContext, null, "MAX!");
+            var vertretungsstunde = klasse6a.Stundens.FirstOrDefault(s=> s.Id == 1);
+            vertretungsstunde.VertretungslehrerId = vertretungslehrer.Id;
+            vertretungsstunde.RaumId = vertretungsraum.Id;
+            dbContext.SaveChanges();
+
+        }
+
+        private static Raum AddRaum(StundenplanDbContext dbContext, string bezeichnung)
+        {
+            var raum = new Raum() { Bezeichnung = bezeichnung};
+            dbContext.Raum.Add(raum);
+            dbContext.SaveChanges();
+            return raum;
         }
 
         private static Klasse AddKlasse(StundenplanDbContext dbContext, string name)
@@ -46,7 +62,21 @@ namespace Stundenplan
             return klasse;
         }
 
-        private static Stunden AddStunde(StundenplanDbContext dbContext, int klasseId, int wochentag, int stundeNr)
+        private static Lehrer AddLehrer(StundenplanDbContext dbContext,int? stundenId, string name)
+        {
+            Lehrer lehrer = new Lehrer()
+            {
+                Name = name,
+                StundenId = stundenId
+            };
+            dbContext.Lehrer.Add(lehrer);
+            dbContext.SaveChanges();
+            return lehrer;
+        }
+
+
+
+        private static Stunden AddStunde(StundenplanDbContext dbContext, int klasseId, int wochentag, int stundeNr, int? lehrerId, int? vertretungslehrerId)
         {
             string lessonStr = GetRandomLesson();
             Stunden stunden = new Stunden()
@@ -54,7 +84,9 @@ namespace Stundenplan
                 Stunde = stundeNr,
                 Wochentag = wochentag,
                 Fach = lessonStr,
-                KlasseId = klasseId
+                KlasseId = klasseId,
+                LehrerId = lehrerId,
+                VertretungslehrerId = vertretungslehrerId
             };
 
             dbContext.Stunden.Add(stunden);

@@ -14,7 +14,7 @@ namespace Stundenplan.Data
         public int Stunde { get; set; }
         public string Fach { get; set; }
         [ForeignKey("LehrerId")]
-        public int? Lehrerid { get; set; }
+        public int? LehrerId { get; set; }
         public Lehrer Lehrer { get; set; }
 
         public int? VertretungslehrerId { get; set; }

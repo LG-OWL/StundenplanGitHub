@@ -45,17 +45,30 @@ else
         </tr>
         @for (int i = 1; i <= 6; i++)
         {
-            <tr>
-                <td>@i</td>
-                @for (int j = 0; j < 5; j++)
+        <tr>
+            <td>@i</td>
+            @for (int j = 0; j < 5; j++)
+            {
+                @if (Model.Stunden.FirstOrDefault(s => s.Stunde == i && s.Wochentag == j).VertretungslehrerId != null)
                 {
-                <td>
-                    @Model.Stunden.FirstOrDefault(s => s.Stunde == i && s.Wochentag == j).Fach <br />@Model.Stunden.FirstOrDefault(s => s.Stunde == i && s.Wochentag == j).Lehrer?.Name
-                    <br />@Model.Stunden.FirstOrDefault(s => s.Stunde == i && s.Wochentag == j).Raum?.Bezeichnung
-                </td>
-
+                    <td>
+                        @Model.Stunden.FirstOrDefault(s => s.Stunde == i && s.Wochentag == j).Fach 
+                        <br /><s>@Model.Stunden.FirstOrDefault(s => s.Stunde == i && s.Wochentag == j).Lehrer?.Name</s>
+                        <br />@Model.Stunden.FirstOrDefault(s => s.Stunde == i && s.Wochentag == j).Vertretungslehrer?.Name
+                        <br />@Model.Stunden.FirstOrDefault(s => s.Stunde == i && s.Wochentag == j).Raum?.Bezeichnung
+                    </td>
                 }
-            </tr>
+                else
+                {
+                    <td>
+                        @Model.Stunden.FirstOrDefault(s => s.Stunde == i && s.Wochentag == j).Fach 
+                        <br />@Model.Stunden.FirstOrDefault(s => s.Stunde == i && s.Wochentag == j).Lehrer?.Name
+                        <br />@Model.Stunden.FirstOrDefault(s => s.Stunde == i && s.Wochentag == j).Vertretungslehrer?.Name
+                        <br />@Model.Stunden.FirstOrDefault(s => s.Stunde == i && s.Wochentag == j).Raum?.Bezeichnung
+                    </td>
+                }
+            }
+        </tr>
 
         }
     </table>
