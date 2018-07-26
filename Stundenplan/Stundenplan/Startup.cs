@@ -22,47 +22,6 @@ namespace Stundenplan
 
         public IConfiguration Configuration { get; }
 
-        public void Seed(IServiceCollection services)
-        {
-            ServiceProvider serviceProvider = services.BuildServiceProvider();
-            var dbContext = serviceProvider.GetRequiredService<StundenplanDbContext>();
-            dbContext.Database.EnsureDeleted();
-            dbContext.Database.EnsureCreated();
-            if (!dbContext.Schueler.Any())
-            {
-                List<Stunden> stundenlist = new List<Stunden>();
-                for (int j = 0; j < 5; j++)
-                {
-                    Random rnd = new Random();
-                    for (int k = 1; k <= 6; k++)
-                    {
-                        int lessonDecision = rnd.Next(1, 4);
-                        string lessonStr;
-                        switch (lessonDecision)
-                        {
-                            case 1:
-                                lessonStr = "Mathe";
-                                break;
-                            case 2:
-                                lessonStr = "Deutsch";
-                                break;
-                            case 3:
-                                lessonStr = "Englisch";
-                                break;
-                            default:
-                                lessonStr = "Frei";
-                                break;
-                        }
-                        Stunden stunden = new Stunden() { Stunde = k, Wochentag = j, Fach = lessonStr};
-                        stundenlist.Add(stunden);
-                    }
-                }
-                dbContext.Klasse.Add(new Klasse() { Bezeichnung = "6a", Stundens = stundenlist });
-                dbContext.SaveChanges();
-            }
-
-        }
-
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -71,7 +30,8 @@ namespace Stundenplan
             services.AddDbContext<StundenplanDbContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("StundenplanDbContext")));
             services.AddTransient<IStundenService, StundenService>();
-            Seed(services);
+
+            Seed.DoSeed(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
