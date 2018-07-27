@@ -4,6 +4,7 @@ using Stundenplan.Models;
 using Stundenplan.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Stundenplan.Services;
+using System.Linq;
 
 namespace Stundenplan.Controllers
 {
@@ -40,6 +41,22 @@ namespace Stundenplan.Controllers
             return View(vm);
         }
 
+        [HttpPost]
+        public IActionResult Index(int? klassen, int? wochentag, int? stunde, int? lehrer, int? raum)
+        {
+            KlasseTestwerteViewModel vm = new KlasseTestwerteViewModel();
+            if (klassen != null && wochentag != null && stunde != null && lehrer != null && raum != null)
+            {
+                _service.AddVertretungslehrer(vm, klassen.Value, wochentag.Value, stunde.Value, lehrer.Value, raum.Value);
+            }
+            ////////////////////////////////////////////////////////////////////////////
+            var klassenliste = _service.GetKlassen();
+            SelectList list = new SelectList(klassenliste, "Id", "Bezeichnung");
+            ViewBag.klasselist = list;
+
+            return View(vm);
+        }
+
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
@@ -49,7 +66,44 @@ namespace Stundenplan.Controllers
 
         public IActionResult Contact()
         {
-            ViewData["Message"] = "Your contact page.";
+            ViewBag.admin = false;
+            var klassenliste = _service.GetKlassen();
+            SelectList dropbownlistKlasse = new SelectList(klassenliste, "Id", "Bezeichnung");
+            ViewBag.klasselist = dropbownlistKlasse;
+
+            var lehrerliste = _service.GetLehrer();
+            SelectList dropbownlistLehrer = new SelectList(lehrerliste, "Id", "Name");
+            ViewBag.lehrerlist = dropbownlistLehrer;
+
+            var raumliste = _service.GetRaeume();
+            SelectList dropbownlistRaum = new SelectList(raumliste, "Id", "Bezeichnung");
+            ViewBag.raumlist = dropbownlistRaum;
+
+            ViewData["Message"] = "Vertretungsstunden - Eintrag";
+
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Contact(string name, string passwort)
+        {
+            if (_service.IsAdmin(name, passwort))
+                ViewBag.admin = true;
+            else
+                ViewBag.admin = false;
+
+            var klassenliste = _service.GetKlassen();
+            SelectList dropbownlistKlasse = new SelectList(klassenliste, "Id", "Bezeichnung");
+            ViewBag.klasselist = dropbownlistKlasse;
+
+            var lehrerliste = _service.GetLehrer();
+            SelectList dropbownlistLehrer = new SelectList(lehrerliste, "Id", "Name");
+            ViewBag.lehrerlist = dropbownlistLehrer;
+
+            var raumliste = _service.GetRaeume();
+            SelectList dropbownlistRaum = new SelectList(raumliste, "Id", "Bezeichnung");
+            ViewBag.raumlist = dropbownlistRaum;
+
+            ViewData["Message"] = "Vertretungsstunden - Eintrag";
 
             return View();
         }

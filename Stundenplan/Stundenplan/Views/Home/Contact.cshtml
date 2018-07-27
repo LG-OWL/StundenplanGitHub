@@ -1,17 +1,42 @@
 ﻿@{
-    ViewData["Title"] = "Contact";
+    ViewData["Title"] = "Admin";
+    bool test = false;
 }
 <h2>@ViewData["Title"]</h2>
 <h3>@ViewData["Message"]</h3>
 
-<address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
-</address>
+@if (!ViewBag.admin)
+{
+    <form action="/Home/Contact" method="post">
+        <input type="text" name="Name" value="" placeholder="Username" />
+        <input type="password" name="Passwort" value="" placeholder="Passwort"/>
+        <input type="submit" value="submit" />
+    </form>
 
-<address>
-    <strong>Support:</strong> <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-</address>
+}
+else
+{
+    <form action="/Home/Index" method="post">
+        @Html.DropDownList("Klassen", ViewBag.klasselist as SelectList, "Wähle deine Klasse aus.")
+        <select name="Wochentag" id="Wochentag">
+            <option value="">Wähle einen Wochentag aus.</option>
+            <option value="0">Montag</option>
+            <option value="1">Dienstag</option>
+            <option value="2">Mittwoch</option>
+            <option value="3">Donnerstag</option>
+            <option value="4">Freitag</option>
+        </select>
+        <select name="Stunde" id="Stunde">
+            <option value="">Wähle eine Stunde aus.</option>
+            <option value="1">Erste Stunde.</option>
+            <option value="2">Zweite Stunde.</option>
+            <option value="3">Dritte Stunde.</option>
+            <option value="4">Vierte Stunde.</option>
+            <option value="5">Fünfte Stunde.</option>
+            <option value="6">Sechste Stunde.</option>
+        </select>
+        @Html.DropDownList("Lehrer", ViewBag.lehrerlist as SelectList, "Wähle einen Lehrer aus.")
+        @Html.DropDownList("Raum", ViewBag.raumlist as SelectList, "Wähle einen Raum aus.")
+        <input type="submit" value="Submit" />
+    </form>
+}

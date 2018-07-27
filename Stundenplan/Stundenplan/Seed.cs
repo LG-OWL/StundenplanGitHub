@@ -41,6 +41,9 @@ namespace Stundenplan
             var vertretungsstunde = klasse6a.Stundens.FirstOrDefault(s=> s.Id == 1);
             vertretungsstunde.VertretungslehrerId = vertretungslehrer.Id;
             vertretungsstunde.RaumId = vertretungsraum.Id;
+
+            //Admin
+            dbContext.Admin.Add(new Admin() { Name = "Lorenz", Passwort = "123" });
             dbContext.SaveChanges();
 
         }
