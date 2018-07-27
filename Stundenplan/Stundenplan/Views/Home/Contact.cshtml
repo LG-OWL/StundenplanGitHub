@@ -37,6 +37,7 @@ else
         </select>
         @Html.DropDownList("Lehrer", ViewBag.lehrerlist as SelectList, "Wähle einen Lehrer aus.")
         @Html.DropDownList("Raum", ViewBag.raumlist as SelectList, "Wähle einen Raum aus.")
+        <input type="hidden" name="Token" value="@ViewData["Token"]"  />
         <input type="submit" value="Submit" />
     </form>
 }
