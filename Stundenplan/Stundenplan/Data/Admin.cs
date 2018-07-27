@@ -10,5 +10,8 @@ namespace Stundenplan.Data
         public int Id { get; set; }
         public string Name { get; set; }
         public string Passwort { get; set; }
+
+        public int TokenId { get; set; }
+        public Token Token { get; set; }
     }
 }

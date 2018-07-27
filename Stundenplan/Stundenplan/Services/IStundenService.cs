@@ -20,5 +20,9 @@ namespace Stundenplan.Services
         int GetLehrerIdByLehrerName(string name);
 
         bool IsAdmin(string name, string passwort);
+
+        bool IsTokenKnown(string token);
+
+        string GetAdminToken(string name, string passwort);
     }
 }

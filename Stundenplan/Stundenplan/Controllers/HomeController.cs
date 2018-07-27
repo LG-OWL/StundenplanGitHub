@@ -45,7 +45,7 @@ namespace Stundenplan.Controllers
         public IActionResult Index(int? klassen, int? wochentag, int? stunde, int? lehrer, int? raum, string token)
         {
             KlasseTestwerteViewModel vm = new KlasseTestwerteViewModel();
-            if (klassen != null && wochentag != null && stunde != null && lehrer != null && raum != null)
+            if (klassen != null && wochentag != null && stunde != null && lehrer != null && raum != null && _service.IsTokenKnown(token))
             {
                 _service.AddVertretungslehrer(vm, klassen.Value, wochentag.Value, stunde.Value, lehrer.Value, raum.Value);
             }
@@ -77,14 +77,16 @@ namespace Stundenplan.Controllers
         public IActionResult Contact(string name, string passwort)
         {
             if (_service.IsAdmin(name, passwort))
+            {
                 ViewBag.admin = true;
+                ViewData["Token"] = _service.GetAdminToken(name,passwort);
+            }
             else
                 ViewBag.admin = false;
 
             FillingDropDownLists();
 
             ViewData["Message"] = "Vertretungsstunden - Eintrag";
-            ViewData["Token"] = "ADHdvJPdjg42)$/AS,D)E§SADasdDASDkasd-_aA123DAS-dlk99232DDD..AD;daWEaD1!dasdADasDa7-adad-___dasdaiudad";
 
             return View();
         }

@@ -43,7 +43,8 @@ namespace Stundenplan
             vertretungsstunde.RaumId = vertretungsraum.Id;
 
             //Admin
-            dbContext.Admin.Add(new Admin() { Name = "Lorenz", Passwort = "123" });
+            Token token = new Token() { Inhalt = "ADHdvJPdjg42)$/AS,D)E§SADasdDASDkasd-_aA123DAS-dlk99232DDD..AD;daWEaD1!dasdADasDa7-adad-___dasdaiudad" };
+            dbContext.Admin.Add(new Admin() { Name = "Lorenz", Passwort = "123", Token = token });
             dbContext.SaveChanges();
 
         }

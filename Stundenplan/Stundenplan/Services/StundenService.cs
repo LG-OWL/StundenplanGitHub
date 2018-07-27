@@ -73,5 +73,16 @@ namespace Stundenplan.Services
             return false;
         }
 
+        public bool IsTokenKnown(string token)
+        {
+            if (_context.Token.Any(t => t.Inhalt == token))
+                return true;
+            return false;
+        }
+
+        public string GetAdminToken(string name, string passwort)
+        {
+            return _context.Admin.Include(a => a.Token).FirstOrDefault(a => a.Name == name && a.Passwort == passwort).Token.Inhalt;
+        }
     }
 }
