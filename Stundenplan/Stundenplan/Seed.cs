@@ -107,10 +107,10 @@ namespace Stundenplan
 
         private static string GetRandomLesson()
         {
-            string[] lessons = { "Mathe", "Deutsch", "Englisch", "Frei" };
+            string[] lessons = { "Mathe", "Deutsch", "Englisch" };
 
             Random rnd = new Random();
-            int lessonDecision = rnd.Next(1, 4);
+            int lessonDecision = rnd.Next(1, 3);
             return lessons[lessonDecision];
         }
     }
