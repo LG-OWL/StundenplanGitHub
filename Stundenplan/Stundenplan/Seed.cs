@@ -36,17 +36,24 @@ namespace Stundenplan
                     AddStunde(dbContext, klasse6b.Id, wochentagCounter, stundenCounter,null,null);
                 }
             }
+            AddTestVertretung(dbContext, klasse6a);            
+            AddingAdmin(dbContext);
+        }
+
+        private static void AddingAdmin(StundenplanDbContext dbContext)
+        {
+            Token token = new Token() { Inhalt = "ADHdvJPdjg42)$/AS,D)E§SADasdDASDkasd-_aA123DAS-dlk99232DDD..AD;daWEaD1!dasdADasDa7-adad-___dasdaiudad" };
+            dbContext.Admin.Add(new Admin() { Name = "Lorenz", Passwort = "!§$%&/()", Token = token });
+            dbContext.SaveChanges();
+        }
+
+        private static void AddTestVertretung(StundenplanDbContext dbContext,Klasse klasse6a)
+        {
             var vertretungsraum = AddRaum(dbContext, "B1.25");
             var vertretungslehrer = AddLehrer(dbContext, null, "MAX!");
-            var vertretungsstunde = klasse6a.Stundens.FirstOrDefault(s=> s.Id == 1);
+            var vertretungsstunde = klasse6a.Stundens.FirstOrDefault(s => s.Id == 1);
             vertretungsstunde.VertretungslehrerId = vertretungslehrer.Id;
             vertretungsstunde.RaumId = vertretungsraum.Id;
-
-            //Admin
-            Token token = new Token() { Inhalt = "ADHdvJPdjg42)$/AS,D)E§SADasdDASDkasd-_aA123DAS-dlk99232DDD..AD;daWEaD1!dasdADasDa7-adad-___dasdaiudad" };
-            dbContext.Admin.Add(new Admin() { Name = "Lorenz", Passwort = "123", Token = token });
-            dbContext.SaveChanges();
-
         }
 
         private static Raum AddRaum(StundenplanDbContext dbContext, string bezeichnung)
