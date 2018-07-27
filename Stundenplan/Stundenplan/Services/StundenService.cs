@@ -26,6 +26,10 @@ namespace Stundenplan.Services
             var result = _context.Klasse
                 .Include(klasse => klasse.Stundens)
                 .ThenInclude(s => s.Lehrer)
+                .Include(klasse => klasse.Stundens)
+                .ThenInclude(s => s.Vertretungslehrer)
+                .Include(klasse => klasse.Stundens)
+                .ThenInclude(s => s.Raum)
                 .FirstOrDefault(k => k.Id == klasseId)
                 .Stundens;
             return result.ToList();

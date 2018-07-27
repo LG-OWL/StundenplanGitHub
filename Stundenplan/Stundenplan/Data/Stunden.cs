@@ -20,11 +20,11 @@ namespace Stundenplan.Data
 
         public int? VertretungslehrerId { get; set; }
         [ForeignKey("VertretungslehrerId")]
-        public virtual Lehrer Vertretungslehrer { get; set; }
+        public Lehrer Vertretungslehrer { get; set; }
 
         public int? RaumId { get; set; }
         [ForeignKey("RaumId")]
-        public virtual Raum Raum { get; set; }
+        public Raum Raum { get; set; }
         //Foreign Key
         public int KlasseId { get; set; }
         //Navigation Property
